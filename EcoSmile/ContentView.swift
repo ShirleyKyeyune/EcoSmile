@@ -8,14 +8,21 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var isLoading = true
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        Group {
+            if isLoading {
+                LoadingView().onAppear {
+                    // Simulate a loading delay
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                        isLoading = false
+                    }
+                }
+            } else {
+                HomeView(viewModel: HomeView.ViewModel())
+            }
         }
-        .padding()
     }
 }
 
